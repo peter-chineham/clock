@@ -1,0 +1,53 @@
+define time
+set [hh v] to (current [hour v])
+if <(length of (hh)) < [2]> then 
+  set [hh v] to (join [0] (hh))
+end
+set [mm v] to (current [minute v])
+if <(length of (mm)) < [2]> then 
+  set [mm v] to (join [0] (mm))
+end
+set [ss v] to (current [second v])
+if <(length of (ss)) < [2]> then 
+  set [ss v] to (join [0] (ss))
+end
+set [time v] to (join (hh) [:])
+set [time v] to (join (time) (mm))
+set [time v] to (join (time) [:])
+set [time v] to (join (time) (ss))
+
+define second
+pen up
+set pen size to (1)
+go to x: (0) y: (0)
+point in direction ((current [second v]) * ((360) / (60)))
+pen down
+move (160) steps
+
+define minute
+pen up
+set pen size to (7)
+go to x: (0) y: (0)
+point in direction ((current [minute v]) * ((360) / (60)))
+pen down
+move (120) steps
+
+define hour
+pen up
+set pen size to (10)
+go to x: (0) y: (0)
+point in direction (((current [hour v]) + (([floor v] of ((current [minute v]) / (12))) * (0.2))) * ((360) / (12)))
+pen down
+move (90) steps
+
+when green flag clicked
+set pen color to [#632d99]
+forever 
+  clear
+  time :: custom
+  hour :: custom
+  minute :: custom
+  second :: custom
+end
+
+(((current [hour v]) + ((current [minute v]) / (60))) * ((360) / (12)))
